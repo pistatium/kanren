@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=500px, initial-scale=1, maximum-scale=1" />  
+	<title>かんれん！検索 ver.Javascript </title>
+	<script src="jquery-1.7.1.min.js"></script>
+	<script src="kanren.js"></script>
+	<script src="arbor/arbor.js"></script>
+	<script src="tag-graph.js"></script>
+	<script>
+		$(function(){
+			if(localStorage.history){
+				var reset='<input type="button" value="reset" id="reset">'
+				$('#history').append("過去のかんれん："+localStorage.history+reset);
+			}
+			var kanren = new Kanren.Keywords('#results','#status','#status','#keyword');
+			$("#kanren-search").click(function(){
+				kanren.get($('#keyword').val());	
+			});
+			$(".tag").click(function(){
+				$(kanren.value_box).val($(this).text());
+				kanren.get($(this).text());
+			});
+			$("#reset").click(function(){
+				localStorage.clear();
+				location.reload();	
+			});
+		});
+	</script>
+	<style>
+		#status{ font-size:x-small;color:#aaa;}
+		a{ color:#660; font-weight:bold;}
+		a:visited{ color:#660;}
+		a:hover{ color:#995;}
+		#viewport{background:#aaa;}
+		#history{height:30px;overflow:hidden;display:inline}
+		#results{height:150px;line-height:150%;}
+	</style>
+</head>
+<body>
+	<header>
+		<img src="logo.png" width=200>
+	</header>
+		<form action="javascript:;">
+			<input type="search" id="keyword" value="新年">
+			<input type="submit" id="kanren-search" value="かんれん検索">
+		</form>
+	<div id="status">検索したい単語を入れてボタンを押してください。</div>
+	<div id="history"></div>
+	<ol id="results"></ol>
+	<canvas id="viewport" width="500" height="600"></canvas>
+	
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3817632-7']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+
+</body>
+</html>
